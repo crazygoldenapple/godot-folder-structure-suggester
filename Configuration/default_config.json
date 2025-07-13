@@ -1,5 +1,4 @@
 {
-  "root_godot_path": "res://",
   "code": [".gd", ".cs"],
   "scene": [".tscn"],
   "asset": [".png", ".jpg", ".wav", ".ogg", ".mp3", ".import"],

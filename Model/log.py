@@ -1,5 +1,6 @@
 import logging
 import os
+import time
 
 class log:
     levels = [logging.DEBUG, logging.INFO, logging.WARNING, logging.ERROR, logging.CRITICAL]
@@ -7,8 +8,10 @@ class log:
     def __init__(self, folder_path='Logs', file_name='project_log.log'):
         if not os.path.isdir(folder_path):
             os.mkdir(folder_path)
+        
+        full_path = f'{folder_path}/{time.strftime("%Y-%m-%d_%H-%M-%S")}_{file_name}'
         for level in self.levels:
-            logging.basicConfig(filename= folder_path + '/' + file_name, level=level, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            logging.basicConfig(filename=full_path, level=level, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
             
         self.logger = logging.getLogger(__name__)
 

@@ -1,9 +1,0 @@
-{
-  "root_path": "res://",
-  "scripts": [".gd", ".cs"],
-  "scenes": [".tscn"],
-  "assets": [".png", ".jpg", ".wav", ".ogg", ".mp3"],
-  "data": [".json", ".tres", ".res"],
-  "config": [".import"],
-  "exclude": ["^\\..*", "README.md", "LICENSE", "project.godot"]
-}

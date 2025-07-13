@@ -2,7 +2,7 @@ import logging
 import os
 import time
 
-class log:
+class Logger:
     levels = [logging.DEBUG, logging.INFO, logging.WARNING, logging.ERROR, logging.CRITICAL]
     
     def __init__(self, folder_path='Logs', file_name='project_log.log'):

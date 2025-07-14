@@ -8,6 +8,13 @@ class FileManagerHelper:
     cwd = Path.cwd()
     
     @staticmethod
+    def get_file_name(file_path: str) -> str:
+        FileManagerHelper.logger.info(f"Getting file name from path: {file_path}")
+        file_name = os.path.basename(file_path)
+        FileManagerHelper.logger.info(f"Extracted file name: {file_name}")
+        return file_name
+    
+    @staticmethod
     def construct_path(arg1, arg2) -> str:
         path = F'{arg1}/{arg2}'
         FileManagerHelper.logger.info(f"Constructed path: {path}")
@@ -53,7 +60,35 @@ class FileManagerHelper:
             return config
         except FileNotFoundError:
             FileManagerHelper.logger.error(f"Configuration file {full_path} not found.")
-            return None
+            return {}
         except json.JSONDecodeError:
             FileManagerHelper.logger.error(f"Error decoding JSON from the file {full_path}.")
-            return None
+            return {}
+    
+    @staticmethod
+    def create_path(path: str) -> None:
+        FileManagerHelper.logger.info(f"Creating path: {path}")
+        os.makedirs(path, exist_ok=True)
+        FileManagerHelper.logger.info(f"Path created: {path}")
+    
+    @staticmethod
+    def read_all_directories(path: str = '') -> list:
+        FileManagerHelper.logger.info(f"Reading directory: {path}")
+        try:
+            files = FileManagerHelper.get_files(path)
+            FileManagerHelper.logger.info(f"Files found in {path}: {files}")
+            return files
+        except FileNotFoundError:
+            FileManagerHelper.logger.error(f"Directory not found: {path}")
+            return []
+    
+    @staticmethod
+    def get_files(path: str) -> list:
+        FileManagerHelper.logger.info(f"Getting files recursively from: {path}")
+        files = []
+        for root, _, filenames in os.walk(path):
+            for filename in filenames:
+                created_path = os.path.join(root, filename)
+                files.append((filename, created_path))
+        FileManagerHelper.logger.info(f"Files found: {files}")
+        return files

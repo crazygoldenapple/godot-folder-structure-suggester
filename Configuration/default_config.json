@@ -1,7 +1,16 @@
 {
-  "code": [".gd", ".cs"],
-  "scene": [".tscn"],
-  "asset": [".png", ".jpg", ".wav", ".ogg", ".mp3", ".import"],
-  "data": [".json", ".tres", ".res"],
-  "exclude": ["^\\..*", "README.md", "LICENSE", "project.godot"]
+  "keywords": ["Manager", "Component", "Global", "UI", "Level"],
+  "code": [".*\\.(gd|cs)$"],
+  "scene": [".*\\.tscn$"],
+  "asset": [".*\\.(png|jpg|wav|ogg|mp3|ttf|svg)$"],
+  "data": [".*\\.(json|tres|res)$"],
+  "exclude": [
+    "^\\..*",
+    "README.md",
+    "LICENSE",
+    "project.godot",
+    ".import",
+    ".csproj",
+    ".sln"
+  ]
 }

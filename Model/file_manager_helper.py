@@ -75,7 +75,7 @@ class FileManagerHelper:
     def read_all_directories(path: str = '') -> list:
         FileManagerHelper.logger.info(f"Reading directory: {path}")
         try:
-            files = FileManagerHelper.get_files(path)
+            files = FileManagerHelper.collect_files_recursively(path)
             FileManagerHelper.logger.info(f"Files found in {path}: {files}")
             return files
         except FileNotFoundError:
@@ -83,7 +83,7 @@ class FileManagerHelper:
             return []
     
     @staticmethod
-    def get_files(path: str) -> list:
+    def collect_files_recursively(path: str) -> list:
         FileManagerHelper.logger.info(f"Getting files recursively from: {path}")
         files = []
         for root, _, filenames in os.walk(path):
@@ -91,4 +91,20 @@ class FileManagerHelper:
                 created_path = os.path.join(root, filename)
                 files.append((filename, created_path))
         FileManagerHelper.logger.info(f"Files found: {files}")
+        return files
+
+    @staticmethod
+    def get_files_from_directory(directory: str) -> list:
+        FileManagerHelper.logger.info(f"Getting files from directory: {directory}")
+        if not os.path.isdir(directory):
+            FileManagerHelper.logger.error(f"Directory does not exist: {directory}")
+            return []
+        
+        files = []
+        for entry in os.listdir(directory):
+            full_path = os.path.join(directory, entry)
+            if os.path.isfile(full_path):
+                files.append((entry, full_path))
+        
+        FileManagerHelper.logger.info(f"Files found in directory {directory}: {files}")
         return files

@@ -1,0 +1,104 @@
+{
+    "Code": {
+        "Resource": {
+            "BuildingResource": [
+                "BuildingResource.cs",
+                "barracks.tres",
+                "base.tres",
+                "goblin_camp.tres",
+                "village.tres",
+                "tower.tres"
+            ],
+            "ResourceIndicator": [
+                "ResourceIndicator.cs"
+            ],
+            "LevelDefinitionResource": [
+                "LevelDefinitionResource.cs",
+                "level_02.tres",
+                "level_03.tres",
+                "level_01.tres"
+            ]
+        },
+        "Manager": [
+            "ResoureceIndicatorManager.cs",
+            "GridManager.cs",
+            "LevelManager.cs",
+            "FloatingTextManager.cs",
+            "SettingsManager.cs",
+            "SaveManager.cs",
+            "BuildingManager.cs"
+        ],
+        "Component": [
+            "BuildingComponent.cs",
+            "BuildingAnimatorComponent.cs"
+        ],
+        "Ui": [
+            "GameUI.cs"
+        ],
+        "Level": [
+            "LevelCompleteScreen.cs",
+            "LevelManager.cs",
+            "LevelSelectSection.cs",
+            "BaseLevel.cs",
+            "LevelSelectScreen.cs",
+            "LevelCompletionData.cs",
+            "LevelDefinitionResource.cs"
+        ],
+        "Event": [
+            "GameEvents.cs"
+        ],
+        "Helper": [
+            "AudioHelpers.cs",
+            "OptionsHelper.cs"
+        ],
+        "Extention": [
+            "Rect2IExtentions.cs",
+            "NodeExtentions.cs"
+        ]
+    },
+    "Scene": {
+        "Resource": [
+            "ResourceIndicator.tscn"
+        ],
+        "Manager": [
+            "SettingsManager.tscn",
+            "LevelManager.tscn",
+            "ResoureceIndicatorManager.tscn",
+            "GridManager.tscn",
+            "FloatingTextManager.tscn",
+            "BuildingManager.tscn",
+            "SaveManager.tscn"
+        ],
+        "Component": [
+            "BuildingAnimatorComponent.tscn",
+            "BuildingComponent.tscn"
+        ],
+        "Ui": [
+            "GameUI.tscn"
+        ],
+        "Level": [
+            "LevelManager.tscn",
+            "Level2.tscn",
+            "Level3.tscn",
+            "LevelSelectSection.tscn",
+            "Level1.tscn",
+            "LevelCompleteScreen.tscn",
+            "BaseLevel.tscn",
+            "LevelSelectScreen.tscn"
+        ],
+        "Event": [
+            "GameEvents.tscn"
+        ],
+        "Helper": [
+            "OptionsHelper.tscn",
+            "AudioHelpers.tscn"
+        ]
+    },
+    "Asset": {},
+    "Data": [
+        "theme.tres",
+        "highlight_tileset.tres",
+        "default_bus_layout.tres",
+        "tiles.tres"
+    ]
+}

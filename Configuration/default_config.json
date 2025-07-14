@@ -1,5 +1,15 @@
 {
-  "keywords": ["Manager", "Component", "Global", "UI", "Level"],
+  "keywords": [
+    "Resource",
+    "Manager",
+    "Component",
+    "Global",
+    "UI",
+    "Level",
+    "Event",
+    "Helper",
+    "Extention"
+  ],
   "code": [".*\\.(gd|cs)$"],
   "scene": [".*\\.tscn$"],
   "asset": [".*\\.(png|jpg|wav|ogg|mp3|ttf|svg)$"],

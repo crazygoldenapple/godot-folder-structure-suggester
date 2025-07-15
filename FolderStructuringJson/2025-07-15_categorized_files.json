@@ -18,12 +18,7 @@
             "Content": [],
             "Buildingresource": {
                 "Content": [
-                    "BuildingResource.cs",
-                    "barracks.tres",
-                    "base.tres",
-                    "goblin_camp.tres",
-                    "village.tres",
-                    "tower.tres"
+                    "BuildingResource.cs"
                 ]
             },
             "Resourceindicator": {
@@ -33,10 +28,7 @@
             },
             "Leveldefinitionresource": {
                 "Content": [
-                    "LevelDefinitionResource.cs",
-                    "level_02.tres",
-                    "level_03.tres",
-                    "level_01.tres"
+                    "LevelDefinitionResource.cs"
                 ]
             }
         },
@@ -168,7 +160,51 @@
         }
     },
     "Asset": {
-        "Content": [],
+        "Content": [
+            "region_top_right.png",
+            "thud.wav",
+            "check.png",
+            "cursor.png",
+            "carved_nine_slides.png",
+            "logs.wav",
+            "house_blue.png",
+            "victory.wav",
+            "highlight_tile.png",
+            "tilemap_flat.png",
+            "fire.png",
+            "button_hover_nine_slides.png",
+            "building_mask.png",
+            "button_red_nine_slides.png",
+            "wood_spawn.png",
+            "Dancing at the Inn.mp3",
+            "wood_tower_red.png",
+            "gold_mine_inactive.png",
+            "icon.svg",
+            "button_red_nine_slides_pressed.png",
+            "region_bottom_left.png",
+            "banner_vertical.png",
+            "explosion_03.wav",
+            "explosion_02.wav",
+            "foam.png",
+            "explosion_01.wav",
+            "gold_mine_active.png",
+            "Bitfantasy.ttf",
+            "water.png",
+            "tree.png",
+            "tilemap_elevation.png",
+            "castle_blue.png",
+            "region_top_left.png",
+            "click.wav",
+            "wood_icon.png",
+            "shadows.png",
+            "region_bottom_right.png",
+            "Tower_Blue.png",
+            "ribbon_red_three_slides.png",
+            "particle.png",
+            "wood_tower_destroyed.png",
+            "poof.wav",
+            "castle_white.png"
+        ],
         "Image": {
             "Content": [
                 "region_top_right.png",
@@ -231,10 +267,18 @@
     },
     "Data": {
         "Content": [
+            "level_02.tres",
+            "level_03.tres",
             "theme.tres",
+            "barracks.tres",
             "highlight_tileset.tres",
             "default_bus_layout.tres",
-            "tiles.tres"
+            "tiles.tres",
+            "base.tres",
+            "level_01.tres",
+            "goblin_camp.tres",
+            "village.tres",
+            "tower.tres"
         ]
     }
 }

@@ -10,23 +10,41 @@
       "Event",
       "Helper",
       "Extention"
-    ]
+    ],
+    "content": {}
   },
   "code": {
-    "default": [".*\\.(gd|cs)$"]
+    "default": [".*\\.(gd|cs)$"],
+    "content": {}
   },
   "scene": {
-    "default": [".*\\.tscn$"]
+    "default": [".*\\.tscn$"],
+    "content": {}
   },
   "asset": {
     "default": [".*\\.(png|jpg|wav|ogg|mp3|ttf|svg)$"],
-    "image": [".*\\.(bmp|png|jpg)$"],
-    "sfx": [".*\\.(wav|ogg|mp3)$"],
-    "font": [".*\\.(ttf)$"],
-    "svg": [".*\\.svg$"]
+    "content": {
+      "image": {
+        "default": [".*\\.(bmp|png|jpg)$"],
+        "content": {}
+      },
+      "sfx": {
+        "default": [".*\\.(wav|ogg|mp3)$"],
+        "content": {}
+      },
+      "font": {
+        "default": [".*\\.ttf$"],
+        "content": {}
+      },
+      "svg": {
+        "default": [".*\\.svg$"],
+        "content": {}
+      }
+    }
   },
   "data": {
-    "default": [".*\\.(json|tres|res)$"]
+    "default": [".*\\.(json|tres|res)$"],
+    "content": {}
   },
   "exclude": {
     "default": [
@@ -37,6 +55,7 @@
       ".import",
       ".csproj",
       ".sln"
-    ]
+    ],
+    "content": {}
   }
 }

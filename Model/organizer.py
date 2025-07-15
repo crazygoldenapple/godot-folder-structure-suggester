@@ -35,11 +35,25 @@ class Organizer:
 
         self.logger.info("Organizer initialized.")
 
-    def daily_organize_files(self) -> dict:
+    def daily_organize_files(self) -> tuple:
+        """
+        Organizes files in a directory based on predefined categories and configurations.
+        This function performs daily file organization by:
+        - Retrieving files from the specified root directory.
+        - Filtering files based on exclusion patterns defined in the configuration.
+        - Classifying files into categories using custom logic.
+        - Processing files based on keywords and data configurations.
+        - Organizing files into a structured dictionary with subcategories.
+        Returns:
+            tuple: A tuple containing:
+                - structure_dict (dict): A dictionary representing the organized file structure.
+                - files_to_path (dict): A dictionary mapping file names to their respective paths.
+        """
         self.logger.info("Starting daily file organization.")
         
         files_tuple_list = fm.get_files_from_directory(self.root_path)
         files_name_list = [name for (name, _) in files_tuple_list]
+        files_to_path = {name: path for (name, path) in files_tuple_list if not any(re.search(pattern, name) for pattern in self.custom_config.get("exclude", {}).get('default', []))}
         categorized_files = self._classify_files(files_name_list)
         
         structure_dict = {}
@@ -51,7 +65,7 @@ class Organizer:
         self._split_into_subcategories(structure_dict)
         
         self.logger.info(f"Daily file organization completed. {structure_dict}")
-        return structure_dict
+        return structure_dict, files_to_path
 
     def folder_struct_suggestion(self) -> dict:
         self.logger.info("Starting daily file structuring.")

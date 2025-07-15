@@ -1,6 +1,8 @@
 import re
+from turtle import st
 from typing import Optional
-from Model.file_manager_helper import FileManagerHelper
+from Model.file_manager_helper import FileManagerHelper as fm
+from Model.folder_organization_helper import FolderOrganizationHelper as fo
 from Model.log import Logger
 
 class Organizer:
@@ -19,7 +21,7 @@ class Organizer:
         self.root_path = root_path
 
         self.logger.info("Initializing Organizer.")
-        self.default_config = FileManagerHelper.load_config()
+        self.default_config = fm.load_config()
 
         if not self.default_config:
             self.logger.error("Default configuration could not be loaded.")
@@ -35,10 +37,65 @@ class Organizer:
     def daily_organize_files(self) -> dict:
         self.logger.info("Starting daily file organization.")
         
-        files_tuple_list = FileManagerHelper.get_files_from_directory(self.root_path)
+        files_tuple_list = fm.get_files_from_directory(self.root_path)
         categorized_files = self._classify_files(files_tuple_list)
         
         structure_dict = {}
+        categories = [category for category in self.custom_config if category not in ['exclude', 'keywords', 'data', 'asset']]
+    
+        self._keyword_processing(categorized_files, structure_dict)
+        self._data_processing(categorized_files, structure_dict)
+        self._asset_processing(categorized_files, structure_dict)
+        self._process_generic_category(categories, structure_dict, categorized_files)
+        
+        self.logger.info(f"Daily file organization completed. {structure_dict}")
+        return structure_dict
+
+    def folder_struct_suggestion(self) -> dict:
+        self.logger.info("Starting daily file structuring.")
+        files_tuple_list = fm.read_all_directories(self.root_path)
+        categorized_files = self._classify_files(files_tuple_list)
+        self.logger.info("Daily file structuring completed.")
+        
+        return categorized_files
+    
+    
+    def _asset_processing(self, categorized_files, structure_dict):
+        self._split_by_sub_categories("Asset" ,self.custom_config.get('asset', {}), categorized_files['asset'], structure_dict)
+    
+    def _split_by_sub_categories(self, main_category: str, sub_categories: dict, files: list, structure_dict: dict):
+        """
+        Split files into subcategories based on the provided patterns and add them to the structure dictionary.
+
+        :param main_category: The main category under which subcategories will be created.(Example: "Asset/Resource" | "Code")
+        :param sub_categories: The dict of subcategories with their patterns.
+        :param files: List of files in the main category.
+        :param structure_dict: The structure dictionary to update.
+        """
+        for category, patterns in sub_categories.items():
+            if category == "default":
+                continue
+            
+            category = category.capitalize()
+            filtered_files = self._filter_files_by_extension(files, patterns)
+            if filtered_files:
+                fo.add_content(f"{main_category}/{category}", structure_dict, [name for name, _ in filtered_files])
+                self.logger.info(f"Added {len(filtered_files)} files to category '{category}'")
+    
+    def _data_processing(self, categorized_files, structure_dict):
+        for tres in categorized_files['data']:
+            inner_text = fm.read_file(tres[1])
+            match = re.search(r'script_class=".*"', inner_text)
+            class_name = ''
+            if match:
+                class_name = match.group(0).split('"')[1]
+            
+            if fo.folder_exists(f"Code/Resource/{class_name}", structure_dict):
+                fo.add_content(f"Code/Resource/{class_name}", structure_dict, [tres[0]])
+            else:
+                fo.add_content(f"Data", structure_dict, [tres[0]])
+
+    def _keyword_processing(self, categorized_files, structure_dict):
         for category, files in categorized_files.items():
             self.logger.info(f"{category.capitalize()} files: {len(files)}")
             if category == "exclude":
@@ -48,32 +105,23 @@ class Organizer:
             if category == "keywords":
                 self._process_keywords_category(files, structure_dict)
             else:
-                self._process_generic_category(category, structure_dict)
-        
-        for tres in categorized_files['data']:
-            inner_text = FileManagerHelper.read_file(tres[1])
-            match = re.search(r'script_class=".*"', inner_text)
-            class_name = ''
-            if match:
-                class_name = match.group(0).split('"')[1]
-            
-            if class_name in structure_dict['Code']['Resource']:
-                structure_dict['Code']['Resource'][class_name].append(tres[0])
-            else:
-                if not structure_dict['Data']:
-                    structure_dict['Data'] = []
-                structure_dict['Data'].append(tres[0])
-        
-        self.logger.info(f"Daily file organization completed. {structure_dict}")
-        return structure_dict
+                self._initialize_generic_category(category, structure_dict)
 
-    def folder_struct_suggestion(self) -> dict:
-        self.logger.info("Starting daily file structuring.")
-        files_tuple_list = FileManagerHelper.read_all_directories(self.root_path)
-        categorized_files = self._classify_files(files_tuple_list)
-        self.logger.info("Daily file structuring completed.")
-        
-        return categorized_files
+
+    def _process_generic_category(self, categories: list, structure_dict: dict, categorized_files: dict):
+        """
+        Process a generic category and organize files into the structure dictionary.
+
+        :param category: The name of the category.
+        :param structure_dict: The structure dictionary to update.
+        :param files: List of files in the category.
+        """
+        print("categorized_files:", categorized_files)
+        for category in categories:
+            files = categorized_files.get(category, [])
+            category = category.capitalize()
+            print("Files:", files)
+            fo.add_content(category, structure_dict, [name for name, _ in files])   
 
     def _process_keywords_category(self, files: list, structure_dict: dict):
         """
@@ -82,28 +130,24 @@ class Organizer:
         :param files: List of files in the 'keywords' category.
         :param structure_dict: The structure dictionary to update.
         """
-        structure_dict['Code'] = {}
-        structure_dict['Scene'] = {}
-        for folder_name in self.custom_config['keywords']:
+        for folder_name in self.custom_config['keywords']['default']:
             category_files = self._filter_files_by_extension(files, [folder_name])
-            code_files = self._filter_files_by_extension(category_files, self.custom_config['code'])
-            scene_files = self._filter_files_by_extension(category_files, self.custom_config['scene'])
+            code_files = self._filter_files_by_extension(category_files, self.custom_config['code']['default'])
+            scene_files = self._filter_files_by_extension(category_files, self.custom_config['scene']['default'])
             
             if folder_name == "Resource":
-                structure_dict['Code']['Resource'] = {}
+                fo.create_folder("Code/Resource", structure_dict)
                 for file_name in code_files:
                     file_name = file_name[0]
                     file_name_without_ext = re.sub(r'\.\w+$', '', file_name)
-                    if file_name_without_ext not in structure_dict['Code']['Resource']:
-                        structure_dict['Code']['Resource'][file_name_without_ext] = []
-                    structure_dict['Code']['Resource'][file_name_without_ext].append(file_name)
+                    fo.add_content(f"Code/Resource/{file_name_without_ext}", structure_dict, [file_name])
             else: 
                 if code_files:
-                    structure_dict['Code'][folder_name.capitalize()] = [file[0] for file in code_files]
+                    fo.add_content(f"Code/{folder_name.capitalize()}", structure_dict, [file[0] for file in code_files])
             if scene_files:
-                structure_dict['Scene'][folder_name.capitalize()] = [file[0] for file in scene_files]
+                fo.add_content(f"Scene/{folder_name.capitalize()}", structure_dict, [file[0] for file in scene_files])
 
-    def _process_generic_category(self, category: str, structure_dict: dict):
+    def _initialize_generic_category(self, category: str, structure_dict: dict):
         """
         Process a generic category and initialize it in the structure dictionary.
 
@@ -111,10 +155,9 @@ class Organizer:
         :param structure_dict: The structure dictionary to update.
         """
         category = category.capitalize()
-        if category not in structure_dict:
-            structure_dict[category] = {}
+        fo.create_folder(category, structure_dict)
         
-        self.logger.info(f"Daily file organization completed. {structure_dict}")
+        self.logger.info(f"Initialized category: {category}")
         
         return structure_dict
     
@@ -142,7 +185,7 @@ class Organizer:
         exclude_patterns = self.custom_config.get("exclude", [])
         self.logger.debug(f"Exclusion patterns: {exclude_patterns}")
 
-        filtered_files = self._filter_excluded_files(files_tuple_list, exclude_patterns)
+        filtered_files = self._filter_excluded_files(files_tuple_list, exclude_patterns['default'])
         self.logger.debug(f"Files after exclusion: {filtered_files}")
 
         categorized_files = self._group_files_based_on_config(filtered_files)
@@ -181,7 +224,7 @@ class Organizer:
                 if category == "exclude":
                     continue
 
-                if any(re.search(pattern, name) for pattern in patterns):
+                if any(re.search(pattern, name) for pattern in patterns['default']):
                     categorized_files[category].append((name, path))
                     self.logger.debug(f"Categorized file: {name} as {category}")
                     break

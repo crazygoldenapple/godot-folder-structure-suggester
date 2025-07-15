@@ -1,26 +1,42 @@
 {
-  "keywords": [
-    "Resource",
-    "Manager",
-    "Component",
-    "Global",
-    "UI",
-    "Level",
-    "Event",
-    "Helper",
-    "Extention"
-  ],
-  "code": [".*\\.(gd|cs)$"],
-  "scene": [".*\\.tscn$"],
-  "asset": [".*\\.(png|jpg|wav|ogg|mp3|ttf|svg)$"],
-  "data": [".*\\.(json|tres|res)$"],
-  "exclude": [
-    "^\\..*",
-    "README.md",
-    "LICENSE",
-    "project.godot",
-    ".import",
-    ".csproj",
-    ".sln"
-  ]
+  "keywords": {
+    "default": [
+      "Resource",
+      "Manager",
+      "Component",
+      "Global",
+      "UI",
+      "Level",
+      "Event",
+      "Helper",
+      "Extention"
+    ]
+  },
+  "code": {
+    "default": [".*\\.(gd|cs)$"]
+  },
+  "scene": {
+    "default": [".*\\.tscn$"]
+  },
+  "asset": {
+    "default": [".*\\.(png|jpg|wav|ogg|mp3|ttf|svg)$"],
+    "image": [".*\\.(bmp|png|jpg)$"],
+    "sfx": [".*\\.(wav|ogg|mp3)$"],
+    "font": [".*\\.(ttf)$"],
+    "svg": [".*\\.svg$"]
+  },
+  "data": {
+    "default": [".*\\.(json|tres|res)$"]
+  },
+  "exclude": {
+    "default": [
+      "^\\..*",
+      "README.md",
+      "LICENSE",
+      "project.godot",
+      ".import",
+      ".csproj",
+      ".sln"
+    ]
+  }
 }

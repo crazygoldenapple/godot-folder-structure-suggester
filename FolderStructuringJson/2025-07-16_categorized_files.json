@@ -1,0 +1,240 @@
+{
+    "Code": {
+        "Content": [
+            "OptionsMenu.cs",
+            "GameCamera.cs",
+            "MainMenu.cs",
+            "GoblinCamp.cs",
+            "BuildingSection.cs",
+            "ElevationLayer.cs",
+            "SaveData.cs",
+            "EscapeMenu.cs",
+            "Cursor.cs",
+            "BuildingGhost.cs",
+            "GoldMine.cs",
+            "FloatingText.cs"
+        ],
+        "Resource": {
+            "Content": [],
+            "Buildingresource": {
+                "Content": [
+                    "BuildingResource.cs"
+                ]
+            },
+            "Resourceindicator": {
+                "Content": [
+                    "ResourceIndicator.cs"
+                ]
+            },
+            "Leveldefinitionresource": {
+                "Content": [
+                    "LevelDefinitionResource.cs"
+                ]
+            }
+        },
+        "Manager": {
+            "Content": [
+                "ResoureceIndicatorManager.cs",
+                "GridManager.cs",
+                "LevelManager.cs",
+                "FloatingTextManager.cs",
+                "SettingsManager.cs",
+                "SaveManager.cs",
+                "BuildingManager.cs"
+            ]
+        },
+        "Component": {
+            "Content": [
+                "BuildingComponent.cs",
+                "BuildingAnimatorComponent.cs"
+            ]
+        },
+        "Ui": {
+            "Content": [
+                "GameUI.cs"
+            ]
+        },
+        "Level": {
+            "Content": [
+                "LevelCompleteScreen.cs",
+                "LevelManager.cs",
+                "LevelSelectSection.cs",
+                "BaseLevel.cs",
+                "LevelSelectScreen.cs",
+                "LevelCompletionData.cs",
+                "LevelDefinitionResource.cs"
+            ]
+        },
+        "Event": {
+            "Content": [
+                "GameEvents.cs"
+            ]
+        },
+        "Helper": {
+            "Content": [
+                "AudioHelpers.cs",
+                "OptionsHelper.cs"
+            ]
+        },
+        "Extention": {
+            "Content": [
+                "Rect2IExtentions.cs",
+                "NodeExtentions.cs"
+            ]
+        }
+    },
+    "Scene": {
+        "Content": [
+            "Barracks.tscn",
+            "BuildingSection.tscn",
+            "ElevationLayer.tscn",
+            "BarracksImpactParticles.tscn",
+            "GoblinCamp.tscn",
+            "TowerSprite2D.tscn",
+            "GoldMine.tscn",
+            "Cursor.tscn",
+            "BarracksDestroyParticales.tscn",
+            "MainMenu.tscn",
+            "FloatingText.tscn",
+            "BarracksSprite2D.tscn",
+            "VillageSprite2D.tscn",
+            "BuildingDestroyParticales.tscn",
+            "Base.tscn",
+            "GameCamera.tscn",
+            "OptionsMenu.tscn",
+            "Tower.tscn",
+            "Village.tscn",
+            "BuildingImpactParticles.tscn",
+            "EscapeMenu.tscn",
+            "BuildingGhost.tscn"
+        ],
+        "Resource": {
+            "Content": [
+                "ResourceIndicator.tscn"
+            ]
+        },
+        "Manager": {
+            "Content": [
+                "SettingsManager.tscn",
+                "LevelManager.tscn",
+                "ResoureceIndicatorManager.tscn",
+                "GridManager.tscn",
+                "FloatingTextManager.tscn",
+                "BuildingManager.tscn",
+                "SaveManager.tscn"
+            ]
+        },
+        "Component": {
+            "Content": [
+                "BuildingAnimatorComponent.tscn",
+                "BuildingComponent.tscn"
+            ]
+        },
+        "Ui": {
+            "Content": [
+                "GameUI.tscn"
+            ]
+        },
+        "Level": {
+            "Content": [
+                "LevelManager.tscn",
+                "Level2.tscn",
+                "Level3.tscn",
+                "LevelSelectSection.tscn",
+                "Level1.tscn",
+                "LevelCompleteScreen.tscn",
+                "BaseLevel.tscn",
+                "LevelSelectScreen.tscn"
+            ]
+        },
+        "Event": {
+            "Content": [
+                "GameEvents.tscn"
+            ]
+        },
+        "Helper": {
+            "Content": [
+                "OptionsHelper.tscn",
+                "AudioHelpers.tscn"
+            ]
+        }
+    },
+    "Asset": {
+        "Content": [],
+        "Image": {
+            "Content": [
+                "region_top_right.png",
+                "check.png",
+                "cursor.png",
+                "carved_nine_slides.png",
+                "house_blue.png",
+                "highlight_tile.png",
+                "tilemap_flat.png",
+                "fire.png",
+                "button_hover_nine_slides.png",
+                "building_mask.png",
+                "button_red_nine_slides.png",
+                "wood_spawn.png",
+                "wood_tower_red.png",
+                "gold_mine_inactive.png",
+                "button_red_nine_slides_pressed.png",
+                "region_bottom_left.png",
+                "banner_vertical.png",
+                "foam.png",
+                "gold_mine_active.png",
+                "water.png",
+                "tree.png",
+                "tilemap_elevation.png",
+                "castle_blue.png",
+                "region_top_left.png",
+                "wood_icon.png",
+                "shadows.png",
+                "region_bottom_right.png",
+                "Tower_Blue.png",
+                "ribbon_red_three_slides.png",
+                "particle.png",
+                "wood_tower_destroyed.png",
+                "castle_white.png"
+            ]
+        },
+        "Sfx": {
+            "Content": [
+                "thud.wav",
+                "logs.wav",
+                "victory.wav",
+                "Dancing at the Inn.mp3",
+                "explosion_03.wav",
+                "explosion_02.wav",
+                "explosion_01.wav",
+                "click.wav",
+                "poof.wav"
+            ]
+        },
+        "Font": {
+            "Content": [
+                "Bitfantasy.ttf"
+            ]
+        },
+        "Svg": {
+            "Content": [
+                "icon.svg"
+            ]
+        }
+    },
+    "Data": {
+        "Content": [
+            "level_02.tres",
+            "level_03.tres",
+            "theme.tres",
+            "barracks.tres",
+            "highlight_tileset.tres",
+            "default_bus_layout.tres",
+            "tiles.tres",
+            "base.tres",
+            "level_01.tres",
+            "goblin_camp.tres",
+            "village.tres",
+            "tower.tres"
+        ]
+    }
+}

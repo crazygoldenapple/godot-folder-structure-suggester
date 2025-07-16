@@ -76,7 +76,7 @@ class Organizer:
         return categorized_files
     
     def _data_processing(self, categorized_files, structure_dict):
-        for tres in categorized_files['data']:
+        for tres in categorized_files.get("data", []):
             inner_text = fm.read_file(tres[1])
             match = re.search(r'script_class=".*"', inner_text)
             class_name = ''
@@ -174,10 +174,10 @@ class Organizer:
 
 
     def _filter_and_categorize_files(self, files_name_list):
-        exclude_patterns = self.custom_config.get("exclude", [])
+        exclude_patterns = self.custom_config.get("exclude", {})
         self.logger.debug(f"Exclusion patterns: {exclude_patterns}")
 
-        filtered_files = self._filter_excluded_files(files_name_list, exclude_patterns['default'])
+        filtered_files = self._filter_excluded_files(files_name_list, exclude_patterns.get("default", []))
         self.logger.debug(f"Files after exclusion: {filtered_files}")
 
         categorized_files = self._group_files_based_on_config(filtered_files)
@@ -243,6 +243,7 @@ class Organizer:
 
                 if filtered_files:
                     fo.add_content(sub_category_path, structure_dict, filtered_files)
+                    fo.remove_content(category_path, structure_dict, filtered_files)
                     self.logger.info(f"Added {len(filtered_files)} files to subcategory '{sub_category_path}'")
 
                     if sub_category in config and isinstance(config[sub_category], dict):

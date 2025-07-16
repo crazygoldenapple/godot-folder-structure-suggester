@@ -8,6 +8,33 @@ class FileManagerHelper:
     cwd = Path.cwd()
     
     @staticmethod
+    def save_file(data, file_path: str, file_name: str) -> None:
+        FileManagerHelper.logger.info(f"Saving data to file: {file_path}")
+        FileManagerHelper.create_path(file_path)
+        file_path = FileManagerHelper.construct_path(FileManagerHelper.cwd,file_path, file_name)
+        try:
+            with open(file_path, 'w') as file:
+                json.dump(data, file, indent=4)
+            FileManagerHelper.logger.info(f"Data saved successfully to {file_path}")
+        except IOError as e:
+            FileManagerHelper.logger.error(f"Error saving file {file_path}: {e}")
+    
+    @staticmethod
+    def load_json_file(file_path: str) -> dict:
+        FileManagerHelper.logger.info(f"Loading file: {file_path}")
+        try:
+            with open(file_path, 'r') as file:
+                data = json.load(file)
+            FileManagerHelper.logger.info(f"File loaded successfully from {file_path}")
+            return data
+        except FileNotFoundError:
+            FileManagerHelper.logger.error(f"File {file_path} not found.")
+            return {}
+        except json.JSONDecodeError as e:
+            FileManagerHelper.logger.error(f"Error decoding JSON from file {file_path}: {e}")
+            return {}
+    
+    @staticmethod
     def get_file_name(file_path: str) -> str:
         FileManagerHelper.logger.info(f"Getting file name from path: {file_path}")
         file_name = os.path.basename(file_path)
@@ -15,10 +42,14 @@ class FileManagerHelper:
         return file_name
     
     @staticmethod
-    def construct_path(arg1, arg2) -> str:
-        path = F'{arg1}/{arg2}'
+    def construct_path(*args) -> str:
+        path_parts = []
+        for arg in args:
+            path_parts.extend(str(arg).split('/'))
+        FileManagerHelper.logger.debug(f"Path Parts: {path_parts}")
+        path = "/".join([part for part in path_parts if len(part) > 0])
         FileManagerHelper.logger.info(f"Constructed path: {path}")
-        return path
+        return "/" + path
     
     @staticmethod
     def directory_exists(dir_path) -> bool:
@@ -50,12 +81,11 @@ class FileManagerHelper:
             return ""
     
     @staticmethod
-    def load_config(file_path: str = "/Configuration/default_config.json") -> dict:
+    def load_config(file_path: str = "Configuration/default_config.json") -> dict:
         full_path = FileManagerHelper.construct_path(FileManagerHelper.cwd, file_path)
         FileManagerHelper.logger.info(f"Loading Default configuration from {full_path}.")
         try:
-            config_content = FileManagerHelper.read_file(full_path)
-            config = json.loads(config_content)
+            config = FileManagerHelper.load_json_file(full_path)
             FileManagerHelper.logger.info("Configuration loaded successfully.")
             return config
         except FileNotFoundError:

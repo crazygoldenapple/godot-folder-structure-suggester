@@ -30,6 +30,23 @@ class FolderOrganizationHelper:
         folder_tree["Content"].extend(content)
         FolderOrganizationHelper.logger.info(f"Added content to folder: {path}")
         
+    @staticmethod
+    def remove_content(path: str, folder_tree: dict, content_to_remove: list) -> None:
+        path_parts = path.split('/')
+        for part in path_parts:
+            part = part.capitalize()
+            if part not in folder_tree:
+                FolderOrganizationHelper.logger.error(f"Folder '{part}' does not exist in the tree.")
+                return
+            folder_tree = folder_tree[part]
+        content = folder_tree.get("Content", [])
+        for item in content_to_remove:
+            if item in content:
+                content.remove(item)
+                FolderOrganizationHelper.logger.info(f"Removed '{item}' from folder: {path}")
+            else:
+                FolderOrganizationHelper.logger.warning(f"Item '{item}' not found in folder: {path}")
+
 
     @staticmethod
     def folder_exists(path: str, folder_tree: dict) -> bool:

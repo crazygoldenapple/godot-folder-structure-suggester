@@ -21,6 +21,7 @@ class Organizer:
         """
         self.logger = Logger(special_prefix=OrganizerConstants.ORGANIZER.value)
         self.root_path = root_path
+        self.files_to_path = {}
 
         self.logger.info("Initializing Organizer.")
         self.default_config = fm.load_config()
@@ -36,7 +37,7 @@ class Organizer:
 
         self.logger.info("Organizer initialized.")
 
-    def daily_organize_files(self) -> tuple:
+    def daily_organize_files(self, files_tuple_list) -> tuple:
         """
         Organizes files in a directory based on predefined categories and configurations.
         This function performs daily file organization by:
@@ -52,9 +53,8 @@ class Organizer:
         """
         self.logger.info("Starting daily file organization.")
         
-        files_tuple_list = fm.get_files_from_directory(self.root_path)
         files_name_list = [name for (name, _) in files_tuple_list]
-        files_to_path = {name: path for (name, path) in files_tuple_list if not any(re.search(pattern, name) for pattern in self.custom_config.get(OrganizerConstants.EXCLUDE.value, {}).get(OrganizerConstants.DEFAULT.value, []))}
+        self.files_to_path = {name: path for (name, path) in files_tuple_list if not any(re.search(pattern, name) for pattern in self.custom_config.get(OrganizerConstants.EXCLUDE.value, {}).get(OrganizerConstants.DEFAULT.value, []))}
         categorized_files = self._classify_files(files_name_list)
         
         structure_dict = {}
@@ -66,11 +66,11 @@ class Organizer:
         self._split_into_subcategories(structure_dict)
         
         self.logger.info(f"Daily file organization completed. {structure_dict}")
-        return structure_dict, files_to_path
+        return structure_dict, self.files_to_path
     
     def _data_processing(self, categorized_files, structure_dict):
         for tres in categorized_files.get("data", []):
-            inner_text = fm.read_file(tres[1])
+            inner_text = fm.read_file(self.files_to_path.get(tres, ""))
             match = re.search(r'script_class=".*"', inner_text)
             class_name = ''
             if match:
@@ -89,6 +89,7 @@ class Organizer:
                 continue
             
             if category == "keywords":
+                self.logger.info(f"Processing 'keywords' category: {files}")
                 self._process_keywords_category(files, structure_dict)
             else:
                 self._initialize_generic_category(category, structure_dict)
@@ -118,6 +119,12 @@ class Organizer:
             category_files = self._filter_files_by_extension(files, [folder_name])       
             code_files = self._filter_files_by_extension(category_files, self.custom_config['code'][OrganizerConstants.DEFAULT.value])
             scene_files = self._filter_files_by_extension(category_files, self.custom_config['scene'][OrganizerConstants.DEFAULT.value])
+            data_files = self._filter_files_by_extension(category_files, self.custom_config['data'][OrganizerConstants.DEFAULT.value])
+            
+            if str.startswith(folder_name, "["):
+                first_letter = folder_name[1].upper()
+                folder_name = re.sub(r'\[.*?\]', '', folder_name).strip()
+                folder_name = first_letter + folder_name
             
             if folder_name == "Resource":
                 fo.create_folder("Code/Resource", structure_dict)
@@ -126,9 +133,11 @@ class Organizer:
                     fo.add_content(f"Code/Resource/{file_name_without_ext}", structure_dict, [file_name])
             else: 
                 if code_files:
-                    fo.add_content(f"Code/{folder_name.capitalize()}", structure_dict, code_files)
+                    fo.add_content(f"Code/{folder_name}", structure_dict, code_files)
             if scene_files:
-                fo.add_content(f"Scene/{folder_name.capitalize()}", structure_dict, scene_files)
+                fo.add_content(f"Scene/{folder_name}", structure_dict, scene_files)
+            if data_files:
+                fo.add_content(f"Data/{folder_name}", structure_dict, data_files)
 
     
 
@@ -170,7 +179,7 @@ class Organizer:
         exclude_patterns = self.custom_config.get("exclude", {})
         self.logger.debug(f"Exclusion patterns: {exclude_patterns}")
 
-        filtered_files = self._filter_excluded_files(files_name_list, exclude_patterns.get("OrganizerConstants.DEFAULT.value", []))
+        filtered_files = self._filter_excluded_files(files_name_list, exclude_patterns.get(OrganizerConstants.DEFAULT.value, []))
         self.logger.debug(f"Files after exclusion: {filtered_files}")
 
         categorized_files = self._group_files_based_on_config(filtered_files)

@@ -1,0 +1,248 @@
+{
+    "Code": {
+        "Content": [
+            "SaveData.cs",
+            "GameCamera.cs",
+            "GoldMine.cs",
+            "OptionsMenu.cs",
+            "MainMenu.cs",
+            "BuildingSection.cs",
+            "EscapeMenu.cs",
+            "FloatingText.cs",
+            "Cursor.cs",
+            "ElevationLayer.cs",
+            "GoblinCamp.cs",
+            "BuildingGhost.cs"
+        ],
+        "Resource": {
+            "Content": [],
+            "LevelDefinitionResource": {
+                "Content": [
+                    "LevelDefinitionResource.cs",
+                    "level_02.tres",
+                    "level_03.tres",
+                    "level_01.tres"
+                ]
+            },
+            "BuildingResource": {
+                "Content": [
+                    "BuildingResource.cs",
+                    "barracks.tres",
+                    "base.tres",
+                    "goblin_camp.tres",
+                    "village.tres",
+                    "tower.tres"
+                ]
+            },
+            "ResourceIndicator": {
+                "Content": [
+                    "ResourceIndicator.cs"
+                ]
+            }
+        },
+        "Manager": {
+            "Content": [
+                "ResoureceIndicatorManager.cs",
+                "GridManager.cs",
+                "FloatingTextManager.cs",
+                "BuildingManager.cs",
+                "LevelManager.cs",
+                "SettingsManager.cs",
+                "SaveManager.cs"
+            ]
+        },
+        "Component": {
+            "Content": [
+                "BuildingComponent.cs",
+                "BuildingAnimatorComponent.cs"
+            ]
+        },
+        "UI": {
+            "Content": [
+                "GameUI.cs"
+            ]
+        },
+        "Level": {
+            "Content": [
+                "LevelDefinitionResource.cs",
+                "LevelCompletionData.cs",
+                "LevelCompleteScreen.cs",
+                "LevelSelectSection.cs",
+                "LevelSelectScreen.cs",
+                "LevelManager.cs",
+                "BaseLevel.cs"
+            ]
+        },
+        "Event": {
+            "Content": [
+                "GameEvents.cs"
+            ]
+        },
+        "Helper": {
+            "Content": [
+                "AudioHelpers.cs",
+                "OptionsHelper.cs"
+            ]
+        },
+        "Extention": {
+            "Content": [
+                "Rect2IExtentions.cs",
+                "NodeExtentions.cs"
+            ]
+        }
+    },
+    "Scene": {
+        "Content": [
+            "GoldMine.tscn",
+            "GameCamera.tscn",
+            "BuildingSection.tscn",
+            "MainMenu.tscn",
+            "FloatingText.tscn",
+            "OptionsMenu.tscn",
+            "EscapeMenu.tscn",
+            "BarracksImpactParticles.tscn",
+            "BarracksDestroyParticales.tscn",
+            "BuildingDestroyParticales.tscn",
+            "BuildingImpactParticles.tscn",
+            "Cursor.tscn",
+            "ElevationLayer.tscn",
+            "Barracks.tscn",
+            "GoblinCamp.tscn",
+            "Base.tscn",
+            "Tower.tscn",
+            "Village.tscn",
+            "BuildingGhost.tscn",
+            "TowerSprite2D.tscn",
+            "BarracksSprite2D.tscn",
+            "VillageSprite2D.tscn"
+        ],
+        "Resource": {
+            "Content": [
+                "ResourceIndicator.tscn"
+            ]
+        },
+        "Manager": {
+            "Content": [
+                "ResoureceIndicatorManager.tscn",
+                "GridManager.tscn",
+                "FloatingTextManager.tscn",
+                "BuildingManager.tscn",
+                "SettingsManager.tscn",
+                "LevelManager.tscn",
+                "SaveManager.tscn"
+            ]
+        },
+        "Component": {
+            "Content": [
+                "BuildingAnimatorComponent.tscn",
+                "BuildingComponent.tscn"
+            ]
+        },
+        "UI": {
+            "Content": [
+                "GameUI.tscn"
+            ]
+        },
+        "Level": {
+            "Content": [
+                "LevelSelectSection.tscn",
+                "LevelCompleteScreen.tscn",
+                "LevelSelectScreen.tscn",
+                "LevelManager.tscn",
+                "Level2.tscn",
+                "Level3.tscn",
+                "Level1.tscn",
+                "BaseLevel.tscn"
+            ]
+        },
+        "Event": {
+            "Content": [
+                "GameEvents.tscn"
+            ]
+        },
+        "Helper": {
+            "Content": [
+                "OptionsHelper.tscn",
+                "AudioHelpers.tscn"
+            ]
+        }
+    },
+    "Data": {
+        "Content": [],
+        "Theme": {
+            "Content": [
+                "theme.tres"
+            ]
+        },
+        "Layout": {
+            "Content": [
+                "default_bus_layout.tres"
+            ]
+        },
+        "Tile": {
+            "Content": [
+                "highlight_tileset.tres",
+                "tiles.tres"
+            ]
+        }
+    },
+    "Asset": {
+        "Content": [],
+        "Image": {
+            "Content": [
+                "gold_mine_inactive.png",
+                "gold_mine_active.png",
+                "region_top_right.png",
+                "check.png",
+                "cursor.png",
+                "carved_nine_slides.png",
+                "button_hover_nine_slides.png",
+                "button_red_nine_slides.png",
+                "wood_spawn.png",
+                "button_red_nine_slides_pressed.png",
+                "region_bottom_left.png",
+                "banner_vertical.png",
+                "region_top_left.png",
+                "wood_icon.png",
+                "region_bottom_right.png",
+                "ribbon_red_three_slides.png",
+                "house_blue.png",
+                "building_mask.png",
+                "wood_tower_red.png",
+                "castle_blue.png",
+                "Tower_Blue.png",
+                "wood_tower_destroyed.png",
+                "castle_white.png",
+                "fire.png",
+                "particle.png",
+                "foam.png",
+                "water.png",
+                "tree.png",
+                "shadows.png"
+            ]
+        },
+        "Sfx": {
+            "Content": [
+                "thud.wav",
+                "logs.wav",
+                "victory.wav",
+                "Dancing at the Inn.mp3",
+                "explosion_03.wav",
+                "explosion_02.wav",
+                "explosion_01.wav",
+                "click.wav",
+                "poof.wav"
+            ]
+        },
+        "Font": {
+            "Content": [
+                "Bitfantasy.ttf"
+            ]
+        },
+        "Svg": {
+            "Content": [
+                "icon.svg"
+            ]
+        }
+    }
+}

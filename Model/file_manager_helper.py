@@ -106,7 +106,7 @@ class FileManagerHelper:
         FileManagerHelper.logger.info(f"Reading directory: {path}")
         try:
             files = FileManagerHelper.collect_files_recursively(path)
-            FileManagerHelper.logger.info(f"Files found in {path}: {files}")
+            FileManagerHelper.logger.info(f"Files found in {path}: {files[:50]}")
             return files
         except FileNotFoundError:
             FileManagerHelper.logger.error(f"Directory not found: {path}")
@@ -120,7 +120,7 @@ class FileManagerHelper:
             for filename in filenames:
                 created_path = os.path.join(root, filename)
                 files.append((filename, created_path))
-        FileManagerHelper.logger.info(f"Files found: {files}")
+        FileManagerHelper.logger.info(f"Files found: {files[:50]}")
         return files
 
     @staticmethod
@@ -136,5 +136,5 @@ class FileManagerHelper:
             if os.path.isfile(full_path):
                 files.append((entry, full_path))
         
-        FileManagerHelper.logger.info(f"Files found in directory {directory}: {files}")
+        FileManagerHelper.logger.info(f"Files found in directory {directory}: {files[:50]}")
         return files

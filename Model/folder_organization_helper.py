@@ -10,7 +10,7 @@ class FolderOrganizationHelper:
         path_parts = path.split('/')
         last_path = ""
         for part in path_parts:
-            part = part.capitalize()
+            part = FolderOrganizationHelper._capitalize(part)
             if part not in folder_tree:
                 folder_tree[part] = {"Content": []}
                 last_path += "/" + part
@@ -22,7 +22,7 @@ class FolderOrganizationHelper:
         FolderOrganizationHelper.create_folder(path, folder_tree)
         path_parts = path.split('/')
         for part in path_parts:
-            part = part.capitalize()
+            part = FolderOrganizationHelper._capitalize(part)
             if part not in folder_tree:
                 FolderOrganizationHelper.logger.error(f"Folder '{part}' does not exist in the tree.")
                 return
@@ -34,7 +34,7 @@ class FolderOrganizationHelper:
     def remove_content(path: str, folder_tree: dict, content_to_remove: list) -> None:
         path_parts = path.split('/')
         for part in path_parts:
-            part = part.capitalize()
+            part = FolderOrganizationHelper._capitalize(part)
             if part not in folder_tree:
                 FolderOrganizationHelper.logger.error(f"Folder '{part}' does not exist in the tree.")
                 return
@@ -52,8 +52,16 @@ class FolderOrganizationHelper:
     def folder_exists(path: str, folder_tree: dict) -> bool:
         path_parts = path.split('/')
         for part in path_parts:
-            part = part.capitalize()
+            part = FolderOrganizationHelper._capitalize(part)
             if part not in folder_tree:
                 return False
             folder_tree = folder_tree[part]
         return True
+    
+    @staticmethod
+    def _capitalize(string: str) -> str:
+        if not string:
+            return string
+        if string[0].isupper():
+            return string
+        return string.capitalize()

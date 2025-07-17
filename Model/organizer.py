@@ -5,10 +5,7 @@ from typing import Optional
 from Model.file_manager_helper import FileManagerHelper as fm
 from Model.folder_organization_helper import FolderOrganizationHelper as fo
 from Model.log import Logger
-from Model.tokenizer import Tokenizer
 from Model.organizer_constants import OrganizerConstants
-from Model.vectorizer import Vectorizer
-from Model.clustering_engine import ClusteringEngine
 
 class Organizer:
     """
@@ -70,58 +67,6 @@ class Organizer:
         
         self.logger.info(f"Daily file organization completed. {structure_dict}")
         return structure_dict, files_to_path
-
-    def folder_struct_suggestion(self) -> dict:
-        self.logger.info("Starting daily file structuring.")
-        files_tuple_list = fm.read_all_directories(self.root_path)
-        files_tuple_list = self._exlude_non_tokenized_files(files_tuple_list, ['exclude', 'asset'])
-        
-        file_to_path = {name:path for (name, path) in files_tuple_list}
-        self.logger.info(f"Files to process: {len(file_to_path)}")
-        
-        tokenizer = Tokenizer()
-        tokenized_files = tokenizer.process_files(file_to_path)
-        vectorizer = Vectorizer()
-        matrix = vectorizer.fit_transform(tokenized_files)
-            
-        self._cluster_files(matrix, vectorizer)
-        
-        self.logger.info("Daily file structuring completed.")
-        
-        return {}
-    
-    def _cluster_files(self, matrix, vectorizer):
-        engine = ClusteringEngine(matrix, vectorizer)
-        clusters = engine.cluster(k=20)
-
-        self.logger.info("📦 File Groups:")
-        for label, files in clusters.items():
-            self.logger.info(f"\nCluster {label}:")
-            for f in files:
-                self.logger.info(f"  - {f}")
-
-        self.logger.info("\n🏷️ Top Keywords Per Cluster:")
-        top_keywords = engine.get_top_keywords_per_cluster()
-        for cluster_id, words in top_keywords.items():
-            self.logger.info(f"Cluster {cluster_id}: {', '.join(words)}")
-
-    
-    def _exlude_non_tokenized_files(self, files_tuple_list: list, categories: list) -> list:
-        """
-        Exclude files that are not tokenized based on the provided configuration.
-
-        :param files_tuple_list: List of file tuples (name, path).
-        :return: Filtered list of file tuples.
-        """
-        exclude_patterns = []
-        for category in categories:
-            exclude_patterns.extend(self.custom_config.get(category, {}).get(OrganizerConstants.DEFAULT.value, []))
-            
-        self.logger.debug(f"Exclusion patterns: {exclude_patterns}")
-        return [
-            (name, path) for name, path in files_tuple_list
-            if not any(re.search(pattern, name) for pattern in exclude_patterns)
-        ]
     
     def _data_processing(self, categorized_files, structure_dict):
         for tres in categorized_files.get("data", []):
